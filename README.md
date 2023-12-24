@@ -33,13 +33,17 @@ cat config | sedplus --find "192.168.1.1" --replace "192.168.3.2" --error-if-not
 `--alphanumeric`
 
 ## Helpers
+Removing common tasks from the input stream
 
 `--remove-quotes`
 
-`--remove-timestmaps`
+`--remove-time`
+
+`--remove-date`
 
 `--remove-ips`
 
+`--remove-uuids`
 
 
 ## To Install

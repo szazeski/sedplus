@@ -1,0 +1,39 @@
+this is the first line that the quick brown fox jumped over the lazy dog
+this is the second line that the quick brown fox jumped over the lazy dog
+this is the third line that the quick brown fox jumped over the lazy dog
+this is the fourth line that the quick brown fox jumped over the lazy dog
+this is the fifth line that the quick brown fox jumped over the lazy dog
+this is the sixth line that the quick brown fox jumped over the lazy dog
+this is the seventh line that the quick brown fox jumped over the lazy dog
+this is the eighth line that the quick brown fox jumped over the lazy dog
+this is the ninth line that the quick brown fox jumped over the lazy dog
+this is the tenth line that the quick brown fox jumped over the lazy dog
+11. Apple
+12. Banana
+13. Cherry
+14. Date
+15. Elderberry
+16. Fig
+17. Grape
+18. Honeydew
+19. Ice Cream Bean
+20. Jackfruit
+21. Kiwi
+22. Lemon
+23. Mango
+24. Nectarine
+25. Orange
+26. Papaya
+27. Quince
+28. Raspberry
+29. Strawberry
+30. Tangerine
+UPPERCASE
+lowercase
+TitleCase
+camelCase
+snake_case
+kebab-case
+12/31/2019 12:00:00 AM
+2020-01-01T00:00:00.000Z
+2023-Jan-01 00:00:00.000

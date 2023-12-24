@@ -60,6 +60,9 @@ func main() {
 	for scanner.Scan() {
 		output := string(scanner.Bytes())
 
+		if trim {
+			output = strings.TrimSpace(output)
+		}
 		if toLowercase {
 			output = strings.ToLower(output)
 		}
@@ -68,43 +71,44 @@ func main() {
 		}
 
 		if find != "" {
-			if replace != "" {
-				if strings.Contains(output, find) {
-					linesChanged++
-					output = strings.ReplaceAll(output, find, replace)
-				}
-			} else {
+			if replace == "" {
 				fmt.Println("missing --replace 'value'")
+				os.Exit(1)
+			}
+			if strings.Contains(output, find) {
+				linesChanged++
+				output = strings.ReplaceAll(output, find, replace)
 			}
 		}
 
 		if findLine != "" {
-			if replace != "" {
-				if strings.Contains(output, findLine) {
-					linesChanged++
-					output = replace
-				}
-			} else {
+			if replace == "" {
 				fmt.Println("missing --replace 'value'")
+				os.Exit(1)
+			}
+			if strings.Contains(output, findLine) {
+				linesChanged++
+				output = replace
 			}
 		}
 
 		if outputNumericOnly {
 			output = numericOnly(output)
 		}
-
-		// todo regex
-
-		if trim {
-			output = strings.TrimSpace(output)
+		if outputAlphaOnly {
+			output = alphaOnly(output)
+		}
+		if outputAlphanumericOnly {
+			output = alphanumericOnly(output)
 		}
 
 		fmt.Println(output)
+	} // end for
 
-		if errorIfNotFound && linesChanged == 0 {
-			os.Exit(1)
-		}
+	if errorIfNotFound && linesChanged == 0 {
+		os.Exit(1)
 	}
+
 	if err := scanner.Err(); err != nil {
 		log.Fatal(err)
 	}
@@ -115,6 +119,21 @@ func numericOnly(value string) string {
 	value = string(regexOutput.ReplaceAll([]byte(value), []byte("")))
 	return value
 }
+func alphaOnly(value string) string {
+	regexOutput, _ := regexp.Compile("[^a-zA-Z]+")
+	value = string(regexOutput.ReplaceAll([]byte(value), []byte("")))
+	return value
+}
+func alphanumericOnly(value string) string {
+	regexOutput, _ := regexp.Compile("[^a-zA-Z0-9]+")
+	value = string(regexOutput.ReplaceAll([]byte(value), []byte("")))
+	return value
+}
+func replaceTimestamps(value string) string {
+	regexOutput, _ := regexp.Compile("[0-9]{2}:[0-9]{2}:[0-9]{2}[ ]+")
+	value = string(regexOutput.ReplaceAll([]byte(value), []byte("")))
+	return value
+}
 
 func showHelpText(errorLine string) {
 	if errorLine != "" {
@@ -122,11 +141,11 @@ func showHelpText(errorLine string) {
 	}
 	fmt.Println("sedplus (an easier to use sed-like tool for Stream EDiting)")
 	fmt.Println("        --find 'apple' --replace 'orange' --errorIfNotFound")
-	fmt.Println("        --findLine 'apple' --replace 'mango'")
+	fmt.Println("        --find-line 'apple' --replace 'mango'")
 	fmt.Println("        --regex 's/apple/mango/g'")
 	fmt.Println("        --alphanumericOnly")
-	fmt.Println("        --toLowercase")
+	fmt.Println("        --lowercase")
+	fmt.Println("        --uppercase")
 	fmt.Println("        --trim")
-	fmt.Println("        --removeDoubleQuotes")
 	fmt.Println("        --blurTimestamps")
 }

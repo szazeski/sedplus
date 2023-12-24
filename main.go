@@ -24,6 +24,8 @@ func main() {
 	flag.StringVar(&findLine, "find-line", "", "findLine looks for this string and replaces the entire line")
 	replace := ""
 	flag.StringVar(&replace, "replace", "", "replace")
+	caseInsensitive := false
+	flag.BoolVar(&caseInsensitive, "case-insensitive", false, "case insensitive for find")
 
 	toLowercase := false
 	flag.BoolVar(&toLowercase, "lowercase", false, "convert to lowercase")
@@ -43,6 +45,9 @@ func main() {
 	errorIfNotFound := false
 	flag.BoolVar(&errorIfNotFound, "error-if-not-found", false, "error if find is not found")
 	linesChanged := 0
+
+	compactWhitespace := false
+	flag.BoolVar(&compactWhitespace, "compact-whitespace", false, "replace multiple spaces with a single space")
 
 	flag.Parse()
 
@@ -75,9 +80,10 @@ func main() {
 				fmt.Println("missing --replace 'value'")
 				os.Exit(1)
 			}
-			if strings.Contains(output, find) {
+			if contains(output, find, caseInsensitive) {
 				linesChanged++
-				output = strings.ReplaceAll(output, find, replace)
+				re := regexp.MustCompile(`(?i)` + find)
+				output = re.ReplaceAllString(output, replace)
 			}
 		}
 
@@ -86,7 +92,7 @@ func main() {
 				fmt.Println("missing --replace 'value'")
 				os.Exit(1)
 			}
-			if strings.Contains(output, findLine) {
+			if contains(output, findLine, caseInsensitive) {
 				linesChanged++
 				output = replace
 			}
@@ -102,6 +108,10 @@ func main() {
 			output = alphanumericOnly(output)
 		}
 
+		if compactWhitespace {
+			output = strings.ReplaceAll(output, "  ", " ")
+		}
+
 		fmt.Println(output)
 	} // end for
 
@@ -112,6 +122,14 @@ func main() {
 	if err := scanner.Err(); err != nil {
 		log.Fatal(err)
 	}
+}
+
+func contains(input string, find string, caseInsensitive bool) bool {
+	if caseInsensitive {
+		input = strings.ToLower(input)
+		find = strings.ToLower(find)
+	}
+	return strings.Contains(input, find)
 }
 
 func numericOnly(value string) string {
@@ -143,9 +161,10 @@ func showHelpText(errorLine string) {
 	fmt.Println("        --find 'apple' --replace 'orange' --errorIfNotFound")
 	fmt.Println("        --find-line 'apple' --replace 'mango'")
 	fmt.Println("        --regex 's/apple/mango/g'")
-	fmt.Println("        --alphanumericOnly")
+	fmt.Println("        --alpha")
+	fmt.Println("        --numeric")
 	fmt.Println("        --lowercase")
 	fmt.Println("        --uppercase")
 	fmt.Println("        --trim")
-	fmt.Println("        --blurTimestamps")
+	fmt.Println("        --compact-whitespace")
 }

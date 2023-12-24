@@ -26,11 +26,14 @@ cat config | sedplus --find "192.168.1.1" --replace "192.168.3.2" --error-if-not
 
 `--trim` removes whitespace from the start and end of each line
 
+
 `--numeric` remove all characters not a digit 0-9 ( asd1234 -> 1234 )
 
 `--alpha`
 
 `--alphanumeric`
+
+`--compact-whitespace` reduce all spacing to a single space (processed last)
 
 ## Helpers
 Removing common tasks from the input stream

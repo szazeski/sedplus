@@ -44,19 +44,22 @@ Removing common tasks from the input stream
 
 `--remove-date`
 
-`--remove-ips`
+`--remove-ip`
 
-`--remove-uuids`
+`--remove-uuid`
 
 
 ## To Install
 
-Mac
+**Mac**
+
 `brew install szazeski/tap/sedplus`
 
-Linux (and mac)
+**Linux (and mac)**
+
 `wget https://github.com/szazeski/sedplus/releases/download/v0.1.0/sedplus_$(uname -s)_$(uname -m).tar.gz -O sedplus.tar.gz && tar -xf sedplus.tar.gz && chmod +x sedplus && sudo mv sedplus /usr/bin/`
 
-Windows
+**Windows**
+
 `Invoke-WebRequest https://github.com/szazeski/sedplus/releases/download/v0.1.0/sedplus_Windows_x86_64.zip -outfile sedplus.zip; tar -xzf sedplus.zip; echo "if you want, move the file to a PATH directory like WINDOWS folder"
 `

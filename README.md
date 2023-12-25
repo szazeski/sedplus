@@ -57,9 +57,9 @@ Removing common tasks from the input stream
 
 **Linux (and mac)**
 
-`wget https://github.com/szazeski/sedplus/releases/download/v0.1.0/sedplus_$(uname -s)_$(uname -m).tar.gz -O sedplus.tar.gz && tar -xf sedplus.tar.gz && chmod +x sedplus && sudo mv sedplus /usr/bin/`
+`wget https://github.com/szazeski/sedplus/releases/download/v0.1.0/sedplus_0.1.0_$(uname -s)_$(uname -m).tar.gz -O sedplus.tar.gz && tar -xf sedplus.tar.gz && chmod +x sedplus && sudo mv sedplus /usr/bin/`
 
 **Windows**
 
-`Invoke-WebRequest https://github.com/szazeski/sedplus/releases/download/v0.1.0/sedplus_Windows_x86_64.zip -outfile sedplus.zip; tar -xzf sedplus.zip; echo "if you want, move the file to a PATH directory like WINDOWS folder"
+`Invoke-WebRequest https://github.com/szazeski/sedplus/releases/download/v0.1.0/sedplus_0.1.0_Windows_x86_64.zip -outfile sedplus.zip; tar -xzf sedplus.zip; echo "if you want, move the file to a PATH directory like WINDOWS folder"
 `

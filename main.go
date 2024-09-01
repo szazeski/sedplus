@@ -10,6 +10,10 @@ import (
 	"strings"
 )
 
+const (
+	version = "0.1.0 (2024-Sep-01)"
+)
+
 func main() {
 	// command | sed 's/apple/mango/g'
 
@@ -31,6 +35,16 @@ func main() {
 	flag.BoolVar(&toLowercase, "lowercase", false, "convert to lowercase")
 	toUppercase := false
 	flag.BoolVar(&toUppercase, "uppercase", false, "convert to uppercase")
+	toTitleCase := false
+	flag.BoolVar(&toTitleCase, "titlecase", false, "convert to titlecase")
+	toSnakeCase := false
+	flag.BoolVar(&toSnakeCase, "snake_case", false, "convert to snake_case")
+	toKebabCase := false
+	flag.BoolVar(&toKebabCase, "kebab-case", false, "convert to kebab-case")
+	toCamelCase := false
+	flag.BoolVar(&toCamelCase, "camelCase", false, "convert to camelcase (camelCase)")
+	toPascalCase := false
+	flag.BoolVar(&toPascalCase, "PascalCase", false, "convert to PascalCase (PascalCase)")
 
 	trim := false
 	flag.BoolVar(&trim, "trim", false, "trim whitespace")
@@ -65,14 +79,32 @@ func main() {
 	for scanner.Scan() {
 		output := string(scanner.Bytes())
 
-		if trim {
+		if trim || toSnakeCase || toKebabCase || toCamelCase || toPascalCase {
 			output = strings.TrimSpace(output)
 		}
-		if toLowercase {
+		if toLowercase || toSnakeCase || toKebabCase || toCamelCase || toPascalCase {
 			output = strings.ToLower(output)
 		}
 		if toUppercase {
 			output = strings.ToUpper(output)
+		}
+		if toTitleCase {
+			output = strings.Title(output)
+		}
+		if toSnakeCase {
+			output = strings.ReplaceAll(output, " ", "_")
+		}
+		if toKebabCase {
+			output = strings.ReplaceAll(output, " ", "-")
+		}
+		if toCamelCase {
+			output = strings.Title(output)
+			output = strings.ReplaceAll(output, " ", "")
+			output = strings.ToLower(output[:1]) + output[1:]
+		}
+		if toPascalCase {
+			output = strings.Title(output)
+			output = strings.ReplaceAll(output, " ", "")
 		}
 
 		if find != "" {
@@ -163,8 +195,9 @@ func showHelpText(errorLine string) {
 	fmt.Println("        --regex 's/apple/mango/g'")
 	fmt.Println("        --alpha")
 	fmt.Println("        --numeric")
-	fmt.Println("        --lowercase")
-	fmt.Println("        --uppercase")
-	fmt.Println("        --trim")
+	fmt.Println("        --lowercase / --uppercase / --titlecase")
+	fmt.Println("        --snake_case / --kebab-case / --camelCase / --PascalCase")
+	fmt.Println("        --trim (whitespace)")
 	fmt.Println("        --compact-whitespace")
+	fmt.Println(" Version: " + version)
 }

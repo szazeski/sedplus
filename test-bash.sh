@@ -50,5 +50,20 @@ sedtest "$actual" "HelloWorld" "--alpha"
 actual=$(echo "Hello 1234 World !*7" | ./sedplus --alphanumeric)
 sedtest "$actual" "Hello1234World7" "--alphanumeric"
 
+actual=$(echo " Hello WORLD case 3" | ./sedplus --camelCase)
+sedtest "$actual" "helloWorldCase3" "--camelCase"
+
+actual=$(echo " Hello WORLD case 3" | ./sedplus --PascalCase)
+sedtest "$actual" "HelloWorldCase3" "--PascalCase"
+
+actual=$(echo " Hello World case" | ./sedplus --snake_case)
+sedtest "$actual" "hello_world_case" "--snake_case"
+
+actual=$(echo " Hello World" | ./sedplus --kebab-case)
+sedtest "$actual" "hello-world" "--kebab-case"
+
+# this is a very basic title case, just capitalizing the first letter of each word
+actual=$(echo "the great big world in a clock" | ./sedplus --titlecase)
+sedtest "$actual" "The Great Big World In A Clock" "--titlecase"
 
 echo "${GREEN}All Tests PASS${NC}"
